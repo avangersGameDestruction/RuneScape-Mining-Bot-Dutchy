@@ -65,4 +65,21 @@ public class MiningBot extends AbstractScript {
         }
         return 600;
     }
+
+    @Override
+    public void onExit() {
+        log("Thankyou For Using DBMiner");
+    }
+
+    // todo : implement a public void onPaint(Graphics2D g) 
+
+    private void chopTree() {
+        GameObject tree = getGameObjects().closest(n -> n.getID() == 7488);
+        if (tree != null && tree.interact("Mine")) {
+            int countLog = getInventory().count("Iron ore");
+            sleepUntil(() -> getInventory().count("Iron ore") > countLog, 12000);
+        }
+    }
+
+    // todo : implementing private void bank()
 }
