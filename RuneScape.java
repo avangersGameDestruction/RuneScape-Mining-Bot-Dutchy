@@ -34,4 +34,35 @@ public class MiningBot extends AbstractScript {
         h %= 24;
         return String.format("%02d:%02d:%02d", h, m, s);
     }
+
+    @Override
+    public void onMessage(Message message) {
+        if (message.getMessage().contains("You manage to mine some iron")) {
+            oreMined++;
+        }
+    }
+
+    @Override
+    public int onLoop() {
+        if (!getInventory().isFull()) {
+            if (treeArea.contains(getLocalPlayer())) {
+                chopTree();
+            } else {
+                if (getWalking().walk(treeArea.getRandomTile())) {
+                    sleep(Calculations.random(3000, 5500));
+                }
+            }
+        }
+
+        if (getInventory().isFull()) {
+            if (bankArea.contains(getLocalPlayer())) {
+                bank();
+            } else {
+                if (getWalking().walk(bankArea.getRandomTile())) {
+                    sleep(Calculations.random(3000, 6000));
+                }
+            }
+        }
+        return 600;
+    }
 }
